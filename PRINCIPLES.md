@@ -249,69 +249,75 @@ If `B` is a subtype of `A`, code using `A` should work correctly when given `B`.
 
 ### Before
 
-Adding another payment method requires modifying the existing class:
+A `Penguin` is technically a bird, but it cannot fly.
 
 ```typescript
-class PaymentService {
-  pay(method: string, amount: number) {
-    if (method === 'card') {
-      console.log(`Paid ${amount} using card`);
-    } else if (method === 'paypal') {
-      console.log(`Paid ${amount} using PayPal`);
-    } else if (method === 'esewa') {
-      console.log(`Paid ${amount} using eSewa`);
-    }
+class Bird {
+  fly(): void {
+    console.log('Flying...');
   }
 }
+
+class Eagle extends Bird {
+  fly(): void {
+    console.log('Eagle is flying');
+  }
+}
+
+class Penguin extends Bird {
+  fly(): void {
+    throw new Error('Penguins cannot fly');
+  }
+}
+
+function makeBirdFly(bird: Bird): void {
+  bird.fly();
+}
+
+const bird: Bird = new Penguin();
+
+makeBirdFly(bird); // Runtime error
 ```
 
-Every new payment method requires changing `PaymentService`.
+`Penguin` cannot safely substitute `Bird` because the parent abstraction promises flying behavior.
 
 ### After
 
-Use an abstraction that allows new payment methods to be added without modifying the payment service:
-
-```ts
-interface PaymentMethod {
-  pay(amount: number): void;
-}
-
-class CardPayment implements PaymentMethod {
-  pay(amount: number): void {
-    console.log(`Paid ${amount} using card`);
-  }
-}
-
-class PaypalPayment implements PaymentMethod {
-  pay(amount: number): void {
-    console.log(`Paid ${amount} using PayPal`);
-  }
-}
-
-class EsewaPayment implements PaymentMethod {
-  pay(amount: number): void {
-    console.log(`Paid ${amount} using eSewa`);
-  }
-}
-
-class PaymentService {
-  pay(paymentMethod: PaymentMethod, amount: number): void {
-    paymentMethod.pay(amount);
-  }
-}
-```
-
-Now a new payment method can be added:
+Separate the concepts:
 
 ```typescript
-class KhaltiPayment implements PaymentMethod {
-  pay(amount: number): void {
-    console.log(`Paid ${amount} using Khalti`);
+class Bird {
+  eat(): void {
+    console.log('Eating...');
   }
 }
+
+interface FlyingBird {
+  fly(): void;
+}
+
+class Eagle extends Bird implements FlyingBird {
+  fly(): void {
+    console.log('Eagle is flying');
+  }
+}
+
+class Penguin extends Bird {
+  swim(): void {
+    console.log('Penguin is swimming');
+  }
+}
+
+function makeBirdFly(bird: FlyingBird): void {
+  bird.fly();
+}
+
+makeBirdFly(new Eagle());
 ```
 
-`PaymentService` does not need to change.
+Now only birds that actually support flying implement `FlyingBird`.
+
+The subtype satisfies the contract expected by the caller.
 
 ## Interface Segregation Principle
 
