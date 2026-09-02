@@ -20,7 +20,7 @@ can update one path while leaving the other incorrect.
 ```ts
 function register(password: string): void {
   if (password.length < 12) {
-    throw new Error("Password must be at least 12 characters");
+    throw new Error('Password must be at least 12 characters');
   }
 
   // Create the account...
@@ -28,7 +28,7 @@ function register(password: string): void {
 
 function changePassword(password: string): void {
   if (password.length < 12) {
-    throw new Error("Password must be at least 12 characters");
+    throw new Error('Password must be at least 12 characters');
   }
 
   // Save the new password...
@@ -45,9 +45,7 @@ const MIN_PASSWORD_LENGTH = 12;
 
 function validatePassword(password: string): void {
   if (password.length < MIN_PASSWORD_LENGTH) {
-    throw new Error(
-      `Password must be at least ${MIN_PASSWORD_LENGTH} characters`,
-    );
+    throw new Error(`Password must be at least ${MIN_PASSWORD_LENGTH} characters`);
   }
 }
 
@@ -149,7 +147,7 @@ class UserService {
   constructor(
     private readonly passwordHasher: PasswordHasher,
     private readonly userRepository: UserRepository,
-    private readonly emailService: EmailService,
+    private readonly emailService: EmailService
   ) {}
 
   async createUser(email: string, password: string) {
@@ -182,11 +180,11 @@ Adding another payment method requires modifying the existing class:
 ```typescript
 class PaymentService {
   pay(method: string, amount: number) {
-    if (method === "card") {
+    if (method === 'card') {
       console.log(`Paid ${amount} using card`);
-    } else if (method === "paypal") {
+    } else if (method === 'paypal') {
       console.log(`Paid ${amount} using PayPal`);
-    } else if (method === "esewa") {
+    } else if (method === 'esewa') {
       console.log(`Paid ${amount} using eSewa`);
     }
   }
@@ -256,11 +254,11 @@ Adding another payment method requires modifying the existing class:
 ```typescript
 class PaymentService {
   pay(method: string, amount: number) {
-    if (method === "card") {
+    if (method === 'card') {
       console.log(`Paid ${amount} using card`);
-    } else if (method === "paypal") {
+    } else if (method === 'paypal') {
       console.log(`Paid ${amount} using PayPal`);
-    } else if (method === "esewa") {
+    } else if (method === 'esewa') {
       console.log(`Paid ${amount} using eSewa`);
     }
   }
@@ -336,15 +334,15 @@ interface Employee {
 
 class Robot implements Employee {
   work(): void {
-    console.log("Robot working");
+    console.log('Robot working');
   }
 
   eat(): void {
-    throw new Error("Robot does not eat");
+    throw new Error('Robot does not eat');
   }
 
   sleep(): void {
-    throw new Error("Robot does not sleep");
+    throw new Error('Robot does not sleep');
   }
 }
 ```
@@ -370,21 +368,21 @@ interface Sleepable {
 
 class Human implements Workable, Eatable, Sleepable {
   work(): void {
-    console.log("Human working");
+    console.log('Human working');
   }
 
   eat(): void {
-    console.log("Human eating");
+    console.log('Human eating');
   }
 
   sleep(): void {
-    console.log("Human sleeping");
+    console.log('Human sleeping');
   }
 }
 
 class Robot implements Workable {
   work(): void {
-    console.log("Robot working");
+    console.log('Robot working');
   }
 }
 ```
@@ -459,7 +457,7 @@ const mysqlRepository = new MySQLUserRepository();
 
 const userService = new UserService(mysqlRepository);
 
-userService.createUser("user@example.com");
+userService.createUser('user@example.com');
 ```
 
 We can switch to PostgreSQL without changing `UserService`:
@@ -469,7 +467,7 @@ const postgresRepository = new PostgreSQLUserRepository();
 
 const userService = new UserService(postgresRepository);
 
-userService.createUser("user@example.com");
+userService.createUser('user@example.com');
 ```
 
 # Summary
