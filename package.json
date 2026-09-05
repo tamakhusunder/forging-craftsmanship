@@ -2,9 +2,10 @@
   "name": "forging-craftsmanship",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --experimental-strip-types --test src/day2/exercises.test.ts",
     "prepare": "husky",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
@@ -37,5 +38,8 @@
     "prettier": "3.9.6",
     "typescript": "5.9",
     "typescript-eslint": "^8.69.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }
